@@ -1,6 +1,6 @@
 import {
     Database, Code2, Network, ShieldCheck,
-    Binary, Layout, Settings, Infinity, Users
+    Binary, Layout, Settings, Infinity as InfinityIcon, Users
 } from "lucide-react";
 
 export const skills = {
@@ -40,7 +40,7 @@ export const skills = {
         { name: "Computer Security", icon: ShieldCheck },
         { name: "Database Management", icon: Database },
         { name: "Software Engineering", icon: Settings },
-        { name: "CI/CD", icon: Infinity },
+        { name: "CI/CD", icon: InfinityIcon },
         { name: "Agile Methodologies", icon: Users },
     ],
 };
