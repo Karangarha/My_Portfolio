@@ -36,13 +36,13 @@ const MainSection = () => {
 
   const isLocked = useRef(false);
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
+  useMotionValueEvent(scrollY, "change", (_latest) => {
     if (nameRef.current) {
       const rect = nameRef.current.getBoundingClientRect();
       const distance = rect.top;
 
       if (nameRef2.current) {
-        const rect2 = nameRef2.current.getBoundingClientRect();
+        // nameRef2.current.getBoundingClientRect();
       }
 
       if (distance <= 0 && !isLocked.current) {
@@ -110,7 +110,7 @@ const MainSection = () => {
               <motion.div
                 ref={nameRef2}
                 transition={{ duration: 0 }}
-                className={`text-primary fixed top-0 z-1`}
+                className={`text-primary fixed top-0 z-1 invisible md:visible`}
                 style={{
                   x: nameTranslateXPx,
                   scale: nameScale,

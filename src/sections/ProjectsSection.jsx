@@ -29,8 +29,8 @@ const ProjectsSection = () => {
         <TitleAnimation title={PROJECTS} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+          {projects.map((project, index) => (
+            <ProjectCard key={index} project={project} />
           ))}
         </div>
       </div>

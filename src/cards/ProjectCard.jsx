@@ -66,7 +66,7 @@ const ProjectCard = ({ key, project }) => {
             />
           </a>
           <a
-            href={project.link}
+            href={project.live}
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:scale-110 transition-transform"

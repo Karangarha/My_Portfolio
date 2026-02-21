@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const TitleAnimation = ({ title }) => {
   return (
-    <motion.div className="text-5xl font-bold text-primary text-center">
+    <motion.div className="lg:text-5xl text-3xl font-bold text-primary text-center">
       {Object.values(title).map((item, index) => (
         <motion.span
           key={index}
