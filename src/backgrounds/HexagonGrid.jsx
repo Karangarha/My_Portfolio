@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useSpring, useMotionValue, useTransform } from "motion/react";
 
 const HexagonGrid = () => {
