@@ -152,6 +152,12 @@ const MainSection = () => {
           >
             <motion.button
               className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-secondary transition-colors"
+              onClick={() => {
+                const projectsSection = document.getElementById("projects");
+                if (projectsSection) {
+                  projectsSection.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
