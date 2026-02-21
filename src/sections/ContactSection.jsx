@@ -1,4 +1,6 @@
 import TitleAnimation from "../cards/TitleAnimation";
+import emailjs from "@emailjs/browser";
+import { useRef } from "react";
 
 import { motion } from "framer-motion";
 import {
@@ -32,7 +34,27 @@ const contact = [
 ];
 // ... other imports
 
+const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
 const ContactSection = () => {
+  const form = useRef();
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm(serviceID, templateID, form.current, publicKey).then(
+      (result) => {
+        console.log(result.text);
+        alert("Message sent successfully! I'll get back to you soon."); // Simple feedback
+        e.target.reset(); // Automatically clears the form fields for the user
+      },
+      (error) => {
+        console.log(error);
+        alert("Something went wrong. Please try again or email me directly.");
+      },
+    );
+  };
   return (
     <section id="contact" className="py-24 px-4">
       <div className="container mx-auto max-w-5xl">
@@ -54,12 +76,23 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-medium text-primary">{item.title}</h4>
-                    <a
-                      href={item.value}
-                      className="text-foreground hover:text-primary transition-color"
-                    >
-                      {item.value}
-                    </a>
+                    {item.title === "Email" ? (
+                      <a
+                        href={`mailto:${item.value}`}
+                        className="text-foreground hover:text-primary transition-color"
+                      >
+                        {item.value}
+                      </a>
+                    ) : item.title === "Phone" ? (
+                      <a
+                        href={`tel:${item.value}`}
+                        className="text-foreground hover:text-primary transition-color"
+                      >
+                        {item.value}
+                      </a>
+                    ) : (
+                      <p className="text-foreground">{item.value}</p>
+                    )}
                   </div>
                 </div>
               ))}
@@ -70,7 +103,7 @@ const ContactSection = () => {
               </h4>
               <div className="flex space-x-4 justify-center">
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/in/karanpreet-singh-1381822a0/"
                   target="_blank"
                   className="bg-primary/10 rounded-full p-2"
                 >
@@ -83,7 +116,7 @@ const ContactSection = () => {
             <h4 className="font-semibold text-2xl mb-6 text-primary">
               Send A Message
             </h4>
-            <form className="space-y-6">
+            <form ref={form} onSubmit={sendEmail} className="space-y-6">
               <div>
                 <label
                   htmlFor="name"
@@ -97,7 +130,7 @@ const ContactSection = () => {
                   type="text"
                   name="name"
                   required
-                  className="w-full px-3 py-2 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary placeholder:text-primary/50 "
+                  className="w-full px-3 py-2 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary placeholder:text-primary/50 text-foreground"
                   placeholder="Karanpreet Singh...."
                 />
               </div>
@@ -115,14 +148,14 @@ const ContactSection = () => {
                   type="email"
                   name="email"
                   required
-                  className="w-full px-3 py-2 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary placeholder:text-primary/50 "
+                  className="w-full px-3 py-2 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary placeholder:text-primary/50 text-foreground"
                   placeholder="john@gmail.com"
                 />
               </div>
 
               <div>
                 <label
-                  htmlFor="Message"
+                  htmlFor="message"
                   className="block text-sm font-medium mb-2 text-primary"
                 >
                   {" "}
@@ -132,7 +165,7 @@ const ContactSection = () => {
                   id="message"
                   name="message"
                   required
-                  className="w-full px-3 py-2 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary resize-none placeholder:text-primary/50 "
+                  className="w-full px-3 py-2 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary resize-none placeholder:text-primary/50 text-foreground"
                   placeholder="Hello, I'd like to talk about...."
                 />
               </div>
