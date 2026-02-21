@@ -59,6 +59,12 @@ const AboutSections = () => {
                 boxShadow: "0px 0px 20px var(--color-primary)",
               }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                const contactSection = document.getElementById("contact");
+                if (contactSection) {
+                  contactSection.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
             >
               Get In Touch
             </motion.button>
