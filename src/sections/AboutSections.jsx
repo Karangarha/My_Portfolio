@@ -56,7 +56,7 @@ const AboutSections = () => {
               className="w-fit px-6 py-2 bg-primary text-white font-semibold rounded-full hover:bg-primary/90 transition-colors mt-4"
               whileHover={{
                 scale: 1.05,
-                boxShadow: "0px 0px 20px var(--color-primary)",
+                boxShadow: "0px 0px 20px 0px var(--color-primary)",
               }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {

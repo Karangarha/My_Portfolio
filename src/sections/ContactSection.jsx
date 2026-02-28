@@ -1,6 +1,6 @@
 import TitleAnimation from "../cards/TitleAnimation";
 import emailjs from "@emailjs/browser";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { motion } from "framer-motion";
 import {
@@ -40,21 +40,33 @@ const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const ContactSection = () => {
   const form = useRef();
-  const sendEmail = (e) => {
+  const [clicked, setClicked] = useState(false);
+  const isSubmitting = useRef(false);
+
+  const sendEmail = async (e) => {
     e.preventDefault();
 
-    emailjs.sendForm(serviceID, templateID, form.current, publicKey).then(
+    if (isSubmitting.current) return;
+    isSubmitting.current = true;
+    setClicked(true);
+
+    await emailjs.sendForm(serviceID, templateID, form.current, publicKey).then(
       (result) => {
         console.log(result.text);
         alert("Message sent successfully! I'll get back to you soon."); // Simple feedback
         e.target.reset(); // Automatically clears the form fields for the user
+        setClicked(false);
+        isSubmitting.current = false;
       },
       (error) => {
         console.log(error);
         alert("Something went wrong. Please try again or email me directly.");
+        setClicked(false);
+        isSubmitting.current = false;
       },
     );
   };
+
   return (
     <section id="contact" className="py-24 px-4">
       <div className="container mx-auto max-w-5xl">
@@ -171,9 +183,10 @@ const ContactSection = () => {
               </div>
               <button
                 type="submit"
-                className=" mx-auto flex items-center justify-center gap-2 px-6 py-3 text-primary bg-primary/10 hover:bg-primary hover:text-background transition-colors rounded-full"
+                disabled={clicked}
+                className=" mx-auto flex items-center justify-center gap-2 px-6 py-3 text-primary bg-primary/10 hover:bg-primary hover:text-background transition-colors rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send Message
+                {clicked ? "Sending..." : "Send Message"}
                 <Send size={16} />
               </button>
             </form>
