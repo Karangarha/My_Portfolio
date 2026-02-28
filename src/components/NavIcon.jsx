@@ -56,7 +56,12 @@ const NavIcon = () => {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
-      {/* Constraint box: exactly 10px away from all edges */}
+      {expanded && (
+        <div
+          className="absolute inset-0 pointer-events-auto bg-transparent"
+          onPointerDown={() => setExpanded(false)}
+        />
+      )}
       <div
         ref={containerRef}
         className="absolute inset-[10px] pointer-events-none"
@@ -72,10 +77,14 @@ const NavIcon = () => {
           whileDrag={{ scale: 1.1 }}
           onDragStart={() => setIsDragging(true)}
           onDragEnd={() => {
-            setTimeout(() => setIsDragging(false), 100);
+            setTimeout(() => setIsDragging(false), 50);
           }}
-          onPointerUp={(e) => {
-            if (!isDragging) {
+          onTap={(e, info) => {
+            const hasMotion =
+              Math.abs(info.offset?.x || 0) > 10 ||
+              Math.abs(info.offset?.y || 0) > 10;
+
+            if (!isDragging && !hasMotion) {
               // If we clicked a button (or inside one), don't toggle expands
               if (e.target.closest("button")) return;
               toggleExpand();
