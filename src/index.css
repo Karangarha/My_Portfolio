@@ -41,13 +41,24 @@
     color: var(--card);
     transition: background-color 0.3s ease, color 0.3s ease;
     font-family: 'Poppins', sans-serif;
+    scrollbar-gutter: stable;
+
    
   }
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+html {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 
   body, button, a {
     cursor: none;
   }
-}
+
 
 @layer components {
   .nav{
