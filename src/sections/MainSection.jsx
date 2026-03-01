@@ -26,10 +26,39 @@ const MainSection = () => {
   const nameTranslateX = useTransform(scrollY, [500, 650], [205, 105 - left]);
   const nameScale = useTransform(scrollY, [600, 650], [1, 0.4]);
 
+  const [scrollLock, setScrollLock] = useState(true);
+
+  useEffect(() => {
+    if (scrollLock) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset"; // Or "auto"
+    }
+
+    const timer = setTimeout(() => {
+      setScrollLock(false);
+    }, 5000);
+
+    // Cleanup: Ensure scroll is restored if user navigates away
+    return () => {
+      document.body.style.overflow = "unset";
+      clearTimeout(timer);
+    };
+  }, [scrollLock]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setPosition("");
     }, 2200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    // Set a timer to unlock after 5000ms (5 seconds)
+    const timer = setTimeout(() => {
+      setScrollLock(false);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -70,8 +99,10 @@ const MainSection = () => {
   const nameTranslateXPx = useTransform(nameTranslateX, (v) => `${v}px`);
 
   return (
-    <section id="home" className="w-full h-screen flex ">
-      <motion.div className=" w-full flex flex-col items-center justify-center">
+    <section id="home" className={`w-full h-screen flex `}>
+      <motion.div
+        className={`w-full flex flex-col items-center justify-center`}
+      >
         <div className="sticky top-1/4 py-50 md:py-20">
           <motion.div className="lg:text-6xl md:text-5xl text-4xl font-bold flex">
             <motion.div
